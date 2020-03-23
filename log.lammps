@@ -1,0 +1,223 @@
+LAMMPS (19 Mar 2020)
+############################################################
+#####	 	    Argon in tank	   	   #########
+############################################################
+variable		temperature equal 85.0
+
+units			real
+atom_style		atomic
+dimension 		3
+boundary		p p p
+
+read_data		atomdata
+  orthogonal box = (0 0 0) to (816 27.2 272)
+  6 by 1 by 2 MPI processor grid
+  reading atoms ...
+  132486 atoms
+  read_data CPU = 0.114109 secs
+#read_restart 		water.restart.mpiio
+
+############################################################
+#############INTERACTION PARAMETERS########################
+group			drop    type 1
+73206 atoms in group drop
+group	   	 	wall    type 2
+59280 atoms in group wall
+
+mass           		1 	18.05
+mass                    2       195.084
+
+neighbor        	2.0 bin
+neigh_modify		every 1 delay 1 check yes
+
+pair_style 		hybrid/overlay lj/cut 18.7 sw
+
+#pair_coeff           	 * * mW.sw Si NULL
+pair_coeff              * * sw mW.sw mW NULL
+Reading potential file mW.sw with DATE: 2007-06-11
+#pair_coeff              * *  lj/cut 6.189 2.3925 1.80
+pair_coeff	    	2 2  lj/cut 15.999 2.47 7.0
+pair_coeff		1 2  lj/cut 0.9 2.8140 7.0
+
+fix	    		f1 wall setforce 0.0 0.0 0.0
+thermo			5
+min_style 		fire
+minimize    		1.0e-5 1.0e-7 200 10000
+WARNING: Using 'neigh_modify every 1 delay 0 check yes' setting during minimization (../min.cpp:190)
+Neighbor list info ...
+  update every 1 steps, delay 0 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9
+  ghost atom cutoff = 9
+  binsize = 4.5, bins = 182 7 61
+  4 neighbor lists, perpetual/occasional/extra = 4 0 0
+  (1) pair lj/cut, perpetual, skip from (3)
+      attributes: half, newton on
+      pair build: skip
+      stencil: none
+      bin: none
+  (2) pair sw, perpetual, skip from (4)
+      attributes: full, newton on
+      pair build: skip
+      stencil: none
+      bin: none
+  (3) neighbor class addition, perpetual, half/full from (4)
+      attributes: half, newton on
+      pair build: halffull/newton
+      stencil: none
+      bin: none
+  (4) neighbor class addition, perpetual
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+  Parameters for fire: 
+    dmax delaystep dtgrow dtshrink alpha0 alphashrink tmax tmin    integrator halfstepback 
+     0.1        20    1.1      0.5   0.25        0.99   10 0.02 eulerimplicit          yes 
+Per MPI rank memory allocation (min/avg/max) = 6.109 | 28.62 | 59.22 Mbytes
+Step Temp E_pair E_mol TotEng Press 
+       0            0 3.1345092e+08            0 3.1345092e+08     16761819 
+       5    111.20064 3.1338277e+08            0 3.1342668e+08     16760688 
+      10     383.6099 3.132326e+08            0 3.133841e+08     16758171 
+      15    742.02424 3.1304001e+08            0 3.1333304e+08     16754706 
+      20    1106.9276 3.1284237e+08            0 3.1327951e+08     16750739 
+      25    1492.7118 3.1262502e+08            0 3.1321451e+08     16745702 
+      30    1819.0538 3.1238987e+08            0 3.1310824e+08     16738993 
+      35    1935.9855 3.1221995e+08            0 3.1298449e+08     16733121 
+      40    1967.9701 3.1208462e+08            0 3.1286179e+08     16727702 
+      45    1938.6824 3.1198177e+08            0 3.1274738e+08     16722890 
+      50    1893.7675 3.1189605e+08            0 3.1264392e+08     16718360 
+      55    1815.1884 3.1183044e+08            0 3.1254728e+08     16714425 
+      60    1723.7471 3.1177688e+08            0 3.1245761e+08     16710909 
+      65    1583.7889 3.1173525e+08            0 3.123607e+08     16707837 
+      70    1396.9575 3.1170271e+08            0 3.1225439e+08     16705153 
+      75    1180.5509 3.116808e+08            0 3.1214702e+08     16703065 
+      80     967.6851 3.116624e+08            0 3.1204455e+08     16701213 
+      81    916.33499 3.1165955e+08            0 3.1202142e+08     16700871 
+Loop time of 11.7177 on 12 procs for 81 steps with 132486 atoms
+
+68.0% CPU use with 12 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+         313450919.676      311662399.251      311659551.335
+  Force two-norm initial, final = 15616.3 554.546
+  Force max component initial, final = 177.055 13.3722
+  Final line search alpha, max atom move = 0 0
+  Iterations, force evaluations = 81 82
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.0015891  | 4.8376     | 10.33      | 199.1 | 41.28
+Neigh   | 0.00068843 | 0.27916    | 0.66281    |  42.4 |  2.38
+Comm    | 0.64688    | 5.641      | 10.025     | 161.8 | 48.14
+Output  | 0.003842   | 0.0038737  | 0.0041082  |   0.1 |  0.03
+Modify  | 7.404e-05  | 0.0019643  | 0.0043345  |   3.4 |  0.02
+Other   |            | 0.9541     |            |       |  8.14
+
+Nlocal:    11040.5 ave 23150 max 0 min
+Histogram: 4 0 2 0 0 0 0 1 3 2
+Nghost:    18286.7 ave 29479 max 11187 min
+Histogram: 4 0 4 0 0 0 0 0 2 2
+Neighs:    1.06489e+06 ave 2.59383e+06 max 0 min
+Histogram: 4 0 0 0 4 2 0 0 0 2
+FullNghs:  250657 ave 529193 max 0 min
+Histogram: 6 0 0 0 0 0 0 0 2 4
+
+Total # of neighbors = 12778688
+Ave neighs/atom = 96.4531
+Neighbor list builds = 5
+Dangerous builds = 0
+
+
+############################################################
+#############EQUILIBRATION PARAMETERS######################
+velocity 		drop create ${temperature} 12345
+velocity 		drop create 85 12345
+compute 		myTemp drop temp
+fix			1 drop nvt temp ${temperature} ${temperature} 100.0
+fix			1 drop nvt temp 85 ${temperature} 100.0
+fix			1 drop nvt temp 85 85 100.0
+fix_modify   		1 temp myTemp
+WARNING: Temperature for fix modify is not for group all (../fix_nh.cpp:1409)
+
+fix	    		f2 wall setforce 0.0 0.0 0.0
+velocity		wall set 0.0 0.0 0.0
+
+###########################################################
+############### Post parameters############################
+thermo_style    	custom step temp pe etotal
+thermo_modify	        temp myTemp
+WARNING: Temperature for thermo pressure is not for group all (../thermo.cpp:485)
+thermo			100
+fix            		extra drop print 2000 "$(step) $(temp) $(pe)" append iteration_info.dat 			screen no
+
+timestep		5.0
+reset_timestep 		0
+restart     		100000 water.restart.mpiio
+dump			1 all custom 10 dumpwater.dat id type x y z
+run			100
+Neighbor list info ...
+  update every 1 steps, delay 1 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9
+  ghost atom cutoff = 9
+  binsize = 4.5, bins = 182 7 61
+  4 neighbor lists, perpetual/occasional/extra = 4 0 0
+  (1) pair lj/cut, perpetual, skip from (3)
+      attributes: half, newton on
+      pair build: skip
+      stencil: none
+      bin: none
+  (2) pair sw, perpetual, skip from (4)
+      attributes: full, newton on
+      pair build: skip
+      stencil: none
+      bin: none
+  (3) neighbor class addition, perpetual, half/full from (4)
+      attributes: half, newton on
+      pair build: halffull/newton
+      stencil: none
+      bin: none
+  (4) neighbor class addition, perpetual
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 7.898 | 31.78 | 63.74 Mbytes
+Step Temp PotEng TotEng 
+       0           85 3.1165955e+08 3.116781e+08 
+     100    155.10486 3.1160845e+08 3.116423e+08 
+Loop time of 11.9759 on 12 procs for 100 steps with 132486 atoms
+
+Performance: 3.607 ns/day, 6.653 hours/ns, 8.350 timesteps/s
+68.7% CPU use with 12 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.00087753 | 4.7432     | 9.6844     | 196.9 | 39.61
+Neigh   | 0.0011324  | 0.5081     | 1.2181     |  57.6 |  4.24
+Comm    | 0.70929    | 5.5848     | 9.8244     | 167.6 | 46.63
+Output  | 0.27575    | 0.28454    | 0.29323    |   1.1 |  2.38
+Modify  | 0.040909   | 0.81008    | 2.554      | 106.8 |  6.76
+Other   |            | 0.04515    |            |       |  0.38
+
+Nlocal:    11040.5 ave 23190 max 0 min
+Histogram: 4 0 2 0 0 0 0 2 2 2
+Nghost:    18456.5 ave 29763 max 11187 min
+Histogram: 4 0 4 0 0 0 0 0 2 2
+Neighs:    1.0752e+06 ave 2.63098e+06 max 0 min
+Histogram: 4 0 0 0 4 2 0 0 0 2
+FullNghs:  236553 ave 497795 max 0 min
+Histogram: 6 0 0 0 0 0 0 0 2 4
+
+Total # of neighbors = 12902345
+Ave neighs/atom = 97.3865
+Neighbor list builds = 9
+Dangerous builds = 0
+
+
+Total wall time: 0:00:24

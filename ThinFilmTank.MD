@@ -24,8 +24,9 @@ neigh_modify		every 1 delay 1 check yes
 
 pair_style 		hybrid/overlay lj/cut 18.7 sw
 
-#pair_coeff      	* * sw mW.sw Si NULL
-pair_coeff              * * sw mW.sw Si NULL
+#pair_coeff           	 * * mW.sw Si NULL
+pair_coeff              * * sw mW.sw mW NULL
+#pair_coeff              * *  lj/cut 6.189 2.3925 1.80
 pair_coeff	    	2 2  lj/cut 15.999 2.47 7.0
 pair_coeff		1 2  lj/cut 0.9 2.8140 7.0
 
@@ -56,7 +57,7 @@ fix            		extra drop print 2000 "$(step) $(temp) $(pe)" append iteration_
 timestep		5.0
 reset_timestep 		0
 restart     		100000 water.restart.mpiio
-dump			1 all custom 5000 dumpwater.dat id type x y z
-run			1000000
+dump			1 all custom 10 dumpwater.dat id type x y z
+run			100
 
 
