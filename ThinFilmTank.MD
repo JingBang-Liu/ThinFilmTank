@@ -58,6 +58,6 @@ timestep		5.0
 reset_timestep 		0
 restart     		100000 water.restart.mpiio
 dump			1 all custom 100 thinfilmtank.dat id type x y z
-run			50000
+run			500
 
 

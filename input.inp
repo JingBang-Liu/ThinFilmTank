@@ -6,8 +6,8 @@ output thinfilmTank.xyz
 
 structure argon.xyz
 
-	number 73206
+	number 36603
 	
-	inside box 0.0 0.0 0.0 790.0 21.0 81.6
+	inside box 0.0 0.0 0.0 790.0 21.0 40.8
 
 end structure
