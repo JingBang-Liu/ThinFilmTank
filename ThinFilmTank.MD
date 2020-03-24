@@ -13,7 +13,7 @@ read_data		atomdata
 
 ############################################################	
 #############INTERACTION PARAMETERS########################
-group			drop    type 1
+group			film    type 1
 group	   	 	wall    type 2
 
 mass           		1 	18.05
@@ -38,9 +38,9 @@ minimize    		1.0e-5 1.0e-7 200 10000
 
 ############################################################	
 #############EQUILIBRATION PARAMETERS######################
-velocity 		drop create ${temperature} 12345
+velocity 		film create ${temperature} 12345
 compute 		myTemp drop temp
-fix			1 drop nvt temp ${temperature} ${temperature} 100.0
+fix			1 film nvt temp ${temperature} ${temperature} 100.0
 fix_modify   		1 temp myTemp
 
 fix	    		f2 wall setforce 0.0 0.0 0.0
