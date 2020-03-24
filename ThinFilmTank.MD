@@ -57,7 +57,7 @@ fix            		extra drop print 2000 "$(step) $(temp) $(pe)" append iteration_
 timestep		5.0
 reset_timestep 		0
 restart     		100000 water.restart.mpiio
-dump			1 all custom 100 thinfilmtank.dat id type x y z
-run			500
+dump			1 all custom 500 thinfilmtank.dat id type x y z
+run			50000
 
 
