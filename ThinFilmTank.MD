@@ -47,7 +47,7 @@ minimize    		1.0e-5 1.0e-7 200 10000
 ############################################################	
 #############EQUILIBRATION PARAMETERS######################
 velocity 		film create ${temperature} 12345
-compute 		myTemp drop temp
+compute 		myTemp film temp
 fix			1 film nvt temp ${temperature} ${temperature} 100.0
 fix_modify   		1 temp myTemp
 
@@ -59,13 +59,13 @@ velocity		wall set 0.0 0.0 0.0
 thermo_style    	custom step temp pe etotal 
 thermo_modify	        temp myTemp
 thermo			100
-fix            		extra drop print 2000 "$(step) $(temp) $(pe)" append iteration_info.dat &
+fix            		extra film print 2000 "$(step) $(temp) $(pe)" append iteration_info.dat &
 			screen no
 
 timestep		5.0
 reset_timestep 		0
 restart     		100000 water.restart.mpiio
 dump			1 all custom 200 thinfilmtank.dat id type x y z
-run			10000
+run			50000
 
 
