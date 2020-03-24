@@ -1,3 +1,5 @@
+## 
+
 ############################################################
 #####	 	    Argon in tank	   	   #########
 ############################################################
@@ -16,19 +18,25 @@ read_data		atomdata
 group			film    type 1
 group	   	 	wall    type 2
 
-mass           		1 	18.05
-mass                    2       195.084
+mass           		1 	39.792  ## atomic mass of argon
+mass                    2       195.084  ## atomic mass of platinum
 
 neighbor        	2.0 bin
 neigh_modify		every 1 delay 1 check yes
 
-pair_style 		hybrid/overlay lj/cut 18.7 sw
+################# hybrid potential #######################
+#pair_style 		hybrid/overlay lj/cut 18.7 sw
 
-#pair_coeff           	 * * mW.sw Si NULL
-pair_coeff              * * sw mW.sw mW NULL
-#pair_coeff              * *  lj/cut 6.189 2.3925 1.80
-pair_coeff	    	2 2  lj/cut 15.999 2.47 7.0
-pair_coeff		1 2  lj/cut 0.9 2.8140 7.0
+#pair_coeff              * * sw mW.sw mW NULL
+#pair_coeff	    	2 2  lj/cut 15.999 2.47 7.0
+#pair_coeff		1 2  lj/cut 0.9 2.8140 7.0
+################### L-J potential #####################
+pair_style             lj/cut  5.5
+
+pair_coeff             1 1  0.1648 3.4  7.0
+pair_coeff             1 2  0.1153 2.72  7.0
+pair_coeff             2 2  15.999 2.47  7.0
+######################################################
 
 fix	    		f1 wall setforce 0.0 0.0 0.0
 thermo			5
@@ -57,7 +65,7 @@ fix            		extra drop print 2000 "$(step) $(temp) $(pe)" append iteration_
 timestep		5.0
 reset_timestep 		0
 restart     		100000 water.restart.mpiio
-dump			1 all custom 500 thinfilmtank.dat id type x y z
-run			50000
+dump			1 all custom 200 thinfilmtank.dat id type x y z
+run			10000
 
 
