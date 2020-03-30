@@ -33,8 +33,8 @@ neigh_modify		every 1 delay 1 check yes
 ################### L-J potential #####################
 pair_style             lj/cut  5.5
 
-pair_coeff             1 1  1.28 3.51  7.0
-pair_coeff             1 2  0.9 2.8140  7.0
+pair_coeff             1 1  0.24 3.4  18.7
+pair_coeff             1 2  0.168 2.72  18.7
 pair_coeff             2 2  15.999 2.47  7.0
 ######################################################
 
