@@ -1,0 +1,13 @@
+tolerance 2.0
+
+filetype xyz
+
+output thinfilmTank.xyz
+
+structure argon.xyz
+
+	number 46297
+	
+	inside box 0.0 0.0 0.0 950.48 33.2 58.8
+
+end structure
