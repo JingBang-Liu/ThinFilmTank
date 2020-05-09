@@ -10,8 +10,8 @@ atom_style		atomic
 dimension 		3	
 boundary		p p p	
 
-read_data		atomdata
-#read_restart 		water.restart.mpiio
+#read_data		atomdata
+read_restart 		water.restart.mpiio
 
 ############################################################	
 #############INTERACTION PARAMETERS########################
